@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mrt_project/common/widgets/custom_button.dart';
 import 'package:mrt_project/common/widgets/custom_textfield.dart';
 import 'package:mrt_project/constants/global_variables.dart';
+import 'package:mrt_project/feature/auth/services/auth_service.dart';
 
 enum Auth {
   signIn,
@@ -20,7 +21,7 @@ class _AuthScreenState extends State<AuthScreen> {
   Auth _auth = Auth.signUp;
   final _signUpFormKey = GlobalKey<FormState>();
   final _signInFormKey = GlobalKey<FormState>();
-
+  final AuthService authService = AuthService();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _nameController = TextEditingController();
@@ -31,6 +32,14 @@ class _AuthScreenState extends State<AuthScreen> {
     _passwordController.dispose();
     _nameController.dispose();
     super.dispose();
+  }
+
+  void signUpUser() {
+    authService.signUpUser(
+        context: context,
+        email: _emailController.text,
+        password: _passwordController.text,
+        name: _nameController.text);
   }
 
   @override
